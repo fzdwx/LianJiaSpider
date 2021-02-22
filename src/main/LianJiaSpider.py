@@ -63,12 +63,15 @@ class LianJiaSpider(object):
 
             self.areaMapHouseCount[areaName] = areaCount
 
+    # 获取单个房源的具体信息并保存到list中
     def parsePageGetHouseInfo(self):
         while not self.queue.empty():
             if self.queue.empty():
                 break
             url = self.queue.get()
             page = self.getPage(url)
+
+            # 进行数据解析
             infoMainXpath = self.parse(page, '//div[@class="content__list--item--main"]')
             for info in infoMainXpath:
                 desInfo = info.xpath('./p[@class="content__list--item--des"]')
@@ -92,8 +95,8 @@ class LianJiaSpider(object):
                 rentUnit = info.xpath('./span[@class="content__list--item-price"]/text()')
                 rent = info.xpath('./span[@class="content__list--item-price"]/em/text()')
 
+                # 封装成对象
                 area_info = AreaInfo()
-
                 area_info.areaName = areaName
                 area_info.houseTitle = houseTitle.replace('\n', '').strip()
                 area_info.houseAddress = houseAddress
@@ -103,7 +106,7 @@ class LianJiaSpider(object):
                 area_info.unitType = unitType.replace('\n', '').strip()
                 area_info.rent = rent[0]
                 area_info.rentUnit = rentUnit[0]
-
+                # 保存到list中
                 self.areaFullDataList.append(area_info.getInfo())
                 # print(area_info.getInfo())
 
@@ -135,7 +138,7 @@ class LianJiaSpider(object):
 
         print(self.areaMapHouseCount)
 
-        # 3.爬取所有房子信息
+        # 3.爬取所有房子具体信息
         for j in range(30):  # 生成url
             self.urlEnQue(self.getListUrl.format(j))
 
@@ -157,6 +160,9 @@ class LianJiaSpider(object):
                 f.writelines(i + "\r\n")
                 n = n + 1
         print(n)
+
+        # todo 进行数据分析 pandas
+
 
 
 if __name__ == '__main__':
