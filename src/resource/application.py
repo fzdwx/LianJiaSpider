@@ -6,7 +6,7 @@
 
 
 # 爬取多少页
-SPIDER_PAGE_NUM = 30
+SPIDER_PAGE_NUM = 50
 # 启动多少线程
 THREAD_COUNT = 15
 # 保存路径

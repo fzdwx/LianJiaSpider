@@ -52,19 +52,17 @@ def spiderData():
     for t in tList:
         t.join()
     # 读取数据并写入csv文件
-    n = 0
     with open(FILE_PATH, 'w', encoding=FILE_ENCODING) as f:
         f.writelines(["区域,", "标题,", "二级区域,", "小区名字,", "朝向,", "户型,", "租金,", "租金单位", "\r\n"])
 
         for i in spider.areaFullDataList:
             f.writelines(i + "\r\n")
-            n = n + 1
+
     end = time.time() - start
     # 日志打印
     print("各区域总租房数：{}".format(spider.areaMapHouseCount))
     print("爬取页面数：{}".format(SPIDER_PAGE_NUM))
     print("启动线程数：{}".format(THREAD_COUNT))
-    print("总数据条数:{}".format(n))
     print("共耗时(ms):{}".format(end))
 
 
