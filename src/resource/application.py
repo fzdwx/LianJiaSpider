@@ -11,3 +11,5 @@ SPIDER_PAGE_NUM = 30
 THREAD_COUNT = 15
 # 保存路径
 FILE_PATH = '..\\resource\\链家数据.csv'
+# 保存文件的编码格式
+FILE_ENCODING = 'gbk'
