@@ -14,7 +14,6 @@ from matplotlib import pyplot as plt
 def main():
     # spiderData()
     dataAnalysis()
-    # todo 进行数据分析 pandas
 
 
 def dataAnalysis():
@@ -25,6 +24,7 @@ def dataAnalysis():
 
     # 1.使用条形图分析哪种户型的数量最多、最受欢迎
     doAnalysis_houseType(df)
+    # todo  统计每个区域的平均租金，并结合柱状图和折线图分析各区域的房源数量和租金情况
 
 
 def doAnalysis_houseType(df):
