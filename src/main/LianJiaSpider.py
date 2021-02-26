@@ -7,10 +7,7 @@ import requests
 from fake_useragent import UserAgent
 from lxml import etree
 from queue import Queue
-from threading import Thread
 from src.main.AreaInfo import *
-import csv
-import codecs
 
 
 class LianJiaSpider(object):
@@ -49,6 +46,7 @@ class LianJiaSpider(object):
         return p.xpath(reg)
 
     def urlEnQue(self, url):
+        print("开始爬取页面:{}".format(url))
         self.queue.put(url)
 
     # 获取每个区域的房子数量
