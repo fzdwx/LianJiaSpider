@@ -24,7 +24,48 @@ def dataAnalysis():
 
     # 1.使用条形图分析哪种户型的数量最多、最受欢迎
     doAnalysis_houseType(df)
-    # todo  统计每个区域的平均租金，并结合柱状图和折线图分析各区域的房源数量和租金情况
+    # 2.统计每个区域的平均租金，并结合柱状图和折线图分析各区域的房源数量和租金情况
+    doAnalysis_areaAvgRent(df)
+
+
+def doAnalysis_areaAvgRent(df):
+    grb = df.groupby(by="区域")
+    areaNameList_x = []
+    areaAvgRentList_y1 = []
+    areaHouseCountList_y2 = []
+    for i, j in grb:
+        # 当前区域
+        areaName = i
+        # 当前区域平均租金
+        areaAvgRent = j["租金"].mean()
+        # 当前区域房源数量
+        areaHouseCount = j["租金"].count()
+
+        areaNameList_x.append(areaName)
+        areaAvgRentList_y1.append(areaAvgRent)
+        areaHouseCountList_y2.append(areaHouseCount)
+
+    # 画图 折线图 -> 区域 == 租金情况
+    plt.figure(figsize=(20, 8), dpi=80)
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.plot(areaNameList_x, areaAvgRentList_y1, color="cyan")
+    plt.title("各区域平均租金折线图", fontsize=24)
+    plt.ylabel("平均租金(元/套)", fontsize=16)
+    plt.xlabel("区域名字", fontsize=16)
+    plt.grid()
+    plt.show()
+
+    # 画图 柱状图-> 区域 == 房源数量
+    plt.figure(figsize=(20, 8), dpi=80)
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['axes.unicode_minus'] = False
+    plt.bar(areaNameList_x, areaHouseCountList_y2, width=0.3, color="cyan")
+    plt.title("各区域房源数量柱状图", fontsize=24)
+    plt.ylabel("房源数量(套)", fontsize=16)
+    plt.xlabel("区域名字", fontsize=16)
+    plt.grid()
+    plt.show()
 
 
 def doAnalysis_houseType(df):
@@ -45,10 +86,12 @@ def doAnalysis_houseType(df):
     plt.bar(houseTypeList_x, houseTypeCountList_y, width=0.5, color="cyan")
     plt.xticks(houseTypeList_x, fontproperties=chFont, rotation=45)
     plt.title("分析出租房中哪种户型的数量最多", fontproperties=chFont, fontsize=24)
+    plt.ylabel("房源个数(套)", fontproperties=chFont, fontsize=16)
+    plt.xlabel("户型", fontproperties=chFont, fontsize=16)
     plt.grid()
     plt.show()
 
-    print("         最多户型:{},共{}户".format(maxCount['户型'], maxCount['数量']))
+    print("最多户型:{},共{}户".format(maxCount['户型'], maxCount['数量']))
 
 
 def spiderData():
