@@ -85,7 +85,7 @@ def doAnalysis_houseType(df):
     plt.figure(figsize=(20, 8), dpi=80)
     plt.bar(houseTypeList_x, houseTypeCountList_y, width=0.5, color="cyan")
     plt.xticks(houseTypeList_x, fontproperties=chFont, rotation=45)
-    plt.title("分析出租房中哪种户型的数量最多", fontproperties=chFont, fontsize=24)
+    plt.title("分析出租房中哪种户型的数量最多的柱状图", fontproperties=chFont, fontsize=24)
     plt.ylabel("房源个数(套)", fontproperties=chFont, fontsize=16)
     plt.xlabel("户型", fontproperties=chFont, fontsize=16)
     plt.grid()
