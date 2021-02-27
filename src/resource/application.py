@@ -12,6 +12,6 @@ THREAD_COUNT = 15
 # 保存路径
 FILE_PATH = '..\\resource\\链家数据.csv'
 # 保存文件的编码格式
-FILE_ENCODING = 'gbk'
+FILE_ENCODING = 'utf-8'
 # 画图使用的中文字体
 chFont = font_manager.FontProperties(family="SimHei")

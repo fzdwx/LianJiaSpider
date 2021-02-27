@@ -25,4 +25,4 @@ class AreaInfo(object):
 
     def getInfo(self):
         return \
-            self.areaName + "," + self.houseTitle + "," + self.houseAddress + "," + self.community + "," + self.size + "," + self.towards + "," + self.unitType + "" + self.rent + "," + self.rentUnit
+            self.areaName + "," + self.houseTitle + "," + self.houseAddress + "," + self.community + "," + self.size + "," + self.towards + "," + self.unitType + "," + self.rent + "," + self.rentUnit

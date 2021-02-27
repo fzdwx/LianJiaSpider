@@ -86,9 +86,9 @@ class LianJiaSpider(object):
                     houseAddress = x1[1]
                     community = x1[2]
                     x2 = title.xpath('./text()')
-                    size = x2[5]
-                    towards = x2[6]
-                    unitType = x2[7]
+                    size = x2[4]
+                    towards = x2[5]
+                    unitType = x2[6]
 
                 rentUnit = info.xpath('./span[@class="content__list--item-price"]/text()')
                 rent = info.xpath('./span[@class="content__list--item-price"]/em/text()')

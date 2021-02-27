@@ -135,7 +135,7 @@ def spiderData():
 
     # 读取数据并写入csv文件
     with open(FILE_PATH, 'w', encoding=FILE_ENCODING) as f:
-        f.writelines(["区域,", "标题,", "二级区域,", "小区名字,", "朝向,", "户型,", "租金,", "租金单位", "\r\n"])
+        f.writelines(["区域,", "标题,", "二级区域,", "小区名字,", "大小,", "朝向,", "户型,", "租金,", "租金单位", "\r\n"])
 
         for i in spider.areaFullDataList:
             f.writelines(i + "\r\n")
