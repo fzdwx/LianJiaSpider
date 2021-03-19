@@ -8,15 +8,16 @@ from fake_useragent import UserAgent
 from lxml import etree
 from queue import Queue
 from src.main.AreaInfo import *
+from src.resource.application import mainUrl, getListUrl
 
 
 class LianJiaSpider(object):
     def __init__(self):
         self.theme = 'zufang'
         # 主路径
-        self.mainUrl = 'https://wh.lianjia.com{}'
+        self.mainUrl = mainUrl
         # 请求房子信息列表url
-        self.getListUrl = 'https://wh.lianjia.com/zufang/pg{}/#contentList'
+        self.getListUrl = getListUrl
         # 保存各个地区的名称
         self.areaNameList = []
         # 保存各个地区的url地址

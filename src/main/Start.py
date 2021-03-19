@@ -27,7 +27,7 @@ def dataAnalysis():
     # 2.统计每个区域的平均租金，并结合柱状图和折线图分析各区域的房源数量和租金情况
     doAnalysis_areaAvgRent_And_HouseCount(df)
     # todo 3.统计面积区间的时长占有率，并使用饼图绘制各区间所占比例
-
+    print(df.sort_values(by="租金").head(20))
 
 def doAnalysis_areaAvgRent_And_HouseCount(df):
     grb = df.groupby(by="区域")

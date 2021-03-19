@@ -5,8 +5,11 @@
 # 配置文件
 from matplotlib import font_manager
 
+# 以下两个url 请只更换前缀 wh
+mainUrl = 'https://wh.lianjia.com{}'
+getListUrl = 'https://wh.lianjia.com/zufang/pg{}/#contentList'
 # 爬取多少页
-SPIDER_PAGE_NUM = 10
+SPIDER_PAGE_NUM = 100
 # 启动多少线程
 THREAD_COUNT = 15
 # 保存路径
