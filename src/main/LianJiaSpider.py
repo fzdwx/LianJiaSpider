@@ -7,8 +7,7 @@ import requests
 from fake_useragent import UserAgent
 from lxml import etree
 from queue import Queue
-from src.main.AreaInfo import *
-from src.resource.application import mainUrl, getListUrl
+from src.resource.application import mainUrl, pageUrl
 
 
 class LianJiaSpider(object):
@@ -17,13 +16,7 @@ class LianJiaSpider(object):
         # 主路径
         self.mainUrl = mainUrl
         # 请求房子信息列表url
-        self.getListUrl = getListUrl
-        # 保存各个地区的名称
-        self.areaNameList = []
-        # 保存各个地区的url地址
-        self.areaUrlList = []
-        # 保存url : name
-        self.areaInfoMap = {}
+        self.pageUrl = pageUrl
         self.queue = Queue()
 
         self.areaFullDataList = []
@@ -72,44 +65,21 @@ class LianJiaSpider(object):
 
             # 进行数据解析
             infoMainXpath = self.parse(page, '//div[@class="content__list--item--main"]')
-            for info in infoMainXpath:
-                desInfo = info.xpath('./p[@class="content__list--item--des"]')
-                areaName = None
-                houseAddress = None
-                community = None
-                size = None
-                towards = None
-                unitType = None
-                houseTitle = None
-                # 增加判断
-                if len(info.xpath('./p[@class="content__list--item--title"]/a/text()')) > 0:
-                    houseTitle = info.xpath('./p[@class="content__list--item--title"]/a/text()')[0]
-                else:
-                    continue
-                for title in desInfo:
-                    x1 = title.xpath('./a/text()')
-                    areaName = x1[0]
-                    houseAddress = x1[1]
-                    community = x1[2]
-                    x2 = title.xpath('./text()')
-                    size = x2[4]
-                    towards = x2[5]
-                    unitType = x2[6]
+            for main in infoMainXpath:
+                desInfo = main.xpath('./p[@class="content__list--item--des"]')
+                for des in desInfo:
+                    title = main.xpath('./p[@class="content__list--item--title"]/a/text()')[0].replace('\n', '').strip()
 
-                rentUnit = info.xpath('./span[@class="content__list--item-price"]/text()')
-                rent = info.xpath('./span[@class="content__list--item-price"]/em/text()')
+                    area_name_and_address_community = des.xpath("./a/text()")
+                    areaName = area_name_and_address_community[0]
+                    address = area_name_and_address_community[1]
+                    community = area_name_and_address_community[2]
 
-                # 封装成对象
-                area_info = AreaInfo()
-                area_info.areaName = areaName
-                area_info.houseTitle = houseTitle.replace('\n', '').strip()
-                area_info.houseAddress = houseAddress
-                area_info.community = community
-                area_info.size = size.strip()
-                area_info.towards = towards.replace('\n', '').strip()
-                area_info.unitType = unitType.replace('\n', '').strip()
-                area_info.rent = rent[0]
-                area_info.rentUnit = rentUnit[0]
-                # 保存到list中
-                self.areaFullDataList.append(area_info.getInfo())
-                # print(area_info.getInfo())
+                    house_size_and_toward_and_house_type = des.xpath('./text()')
+                    size = house_size_and_toward_and_house_type[4].replace('\n', '').strip()
+                    toward = house_size_and_toward_and_house_type[5].replace('\n', '').strip()
+                    house_type = house_size_and_toward_and_house_type[6].replace('\n', '').strip()
+                    rent = main.xpath('./span[@class="content__list--item-price"]/em/text()')[0]
+                    info = areaName + "," + title + "," + address + "," + community + "," + size + "," + toward + "," + house_type + "," + rent
+
+                    self.areaFullDataList.append(info)

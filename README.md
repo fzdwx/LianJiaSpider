@@ -21,7 +21,7 @@ python爬虫-毕业设计
 4、图表分析：设计合适的图表完成要求的各项数据统计
 
 
-# 使用方法：
+# Quick start：
 1、 src/resource/application.py 配置爬取多少页面、启动线程数量、csv文件保存地址
 
-2、 运行start.py
+2、 运行main.py
