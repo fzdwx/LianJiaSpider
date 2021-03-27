@@ -74,13 +74,18 @@ class LianJiaSpider(object):
             infoMainXpath = self.parse(page, '//div[@class="content__list--item--main"]')
             for info in infoMainXpath:
                 desInfo = info.xpath('./p[@class="content__list--item--des"]')
-                houseTitle = info.xpath('./p[@class="content__list--item--title"]/a/text()')[0]
                 areaName = None
                 houseAddress = None
                 community = None
                 size = None
                 towards = None
                 unitType = None
+                houseTitle = None
+                # 增加判断
+                if len(info.xpath('./p[@class="content__list--item--title"]/a/text()')) > 0:
+                    houseTitle = info.xpath('./p[@class="content__list--item--title"]/a/text()')[0]
+                else:
+                    continue
                 for title in desInfo:
                     x1 = title.xpath('./a/text()')
                     areaName = x1[0]

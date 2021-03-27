@@ -15,7 +15,7 @@ def main():
     """
     爬取数据
     """
-    # spiderData()
+    spiderData()
     """
     进行数据分析
     """
@@ -163,8 +163,6 @@ def doAnalysis_houseType(df):
     plt.xlabel("户型", fontproperties=chFont, fontsize=16)
     plt.grid()
     plt.show()
-
-    print("最多户型:{},共{}户".format(maxCount['户型'], maxCount['数量']))
 
 
 def spiderData():
