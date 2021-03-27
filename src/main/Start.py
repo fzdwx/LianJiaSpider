@@ -12,7 +12,13 @@ from matplotlib import pyplot as plt
 
 
 def main():
+    """
+    爬取数据
+    """
     # spiderData()
+    """
+    进行数据分析
+    """
     dataAnalysis()
 
 
@@ -26,9 +32,74 @@ def dataAnalysis():
     doAnalysis_houseType(df)
     # 2.统计每个区域的平均租金，并结合柱状图和折线图分析各区域的房源数量和租金情况
     doAnalysis_areaAvgRent_And_HouseCount(df)
-    # todo 3.统计面积区间的时长占有率，并使用饼图绘制各区间所占比例
-    print(df.sort_values(by="租金").head(20))
+    # 3.统计面积区间的市场占有率，并使用饼图绘制各区间所占比例
+    doAnalysis_area_Interval_Ratio_Pie_Chart(df)
 
+
+# 统计面积区间的市场占有率的饼状图
+def doAnalysis_area_Interval_Ratio_Pie_Chart(df):
+    # 面积区间数量 Map
+    AreaInterval = {
+        "0-20㎡": 0,
+        "20-40㎡": 0,
+        "40-60㎡": 0,
+        "60-80㎡": 0,
+        "80-100㎡": 0,
+        "100-120㎡": 0,
+        "120-140㎡": 0,
+        "140-160㎡": 0,
+        "160-180㎡": 0,
+        "180-~㎡": 0,
+    }
+    grb = df.groupby(by="大小")
+
+    # 获取每个区间的数量并计算占有比例
+    for i, j in grb:
+        if int(i[:-1]) < 20:
+            AreaInterval["0-20㎡"] = AreaInterval["0-20㎡"] + j.shape[0]
+        elif 20 <= int(i[:-1]) < 40:
+            AreaInterval["20-40㎡"] = AreaInterval["20-40㎡"] + j.shape[0]
+        elif 40 <= int(i[:-1]) < 60:
+            AreaInterval["40-60㎡"] = AreaInterval["40-60㎡"] + j.shape[0]
+        elif 60 <= int(i[:-1]) < 80:
+            AreaInterval["60-80㎡"] = AreaInterval["60-80㎡"] + j.shape[0]
+        elif 80 <= int(i[:-1]) < 100:
+            AreaInterval["80-100㎡"] = AreaInterval["80-100㎡"] + j.shape[0]
+        elif 100 <= int(i[:-1]) < 120:
+            AreaInterval["100-120㎡"] = AreaInterval["100-120㎡"] + j.shape[0]
+        elif 120 <= int(i[:-1]) < 140:
+            AreaInterval["120-140㎡"] = AreaInterval["120-140㎡"] + j.shape[0]
+        elif 140 <= int(i[:-1]) < 160:
+            AreaInterval["140-160㎡"] = AreaInterval["140-160㎡"] + j.shape[0]
+        elif 160 <= int(i[:-1]) < 180:
+            AreaInterval["160-180㎡"] = AreaInterval["160-180㎡"] + j.shape[0]
+        else:
+            AreaInterval["180-~㎡"] = AreaInterval["180-~㎡"] + j.shape[0]
+    totalSize = df.shape[0]
+    for k in AreaInterval:
+        AreaInterval[k] = AreaInterval[k] / totalSize
+
+    # 画图
+    Pie_Chart = pd.Series(AreaInterval)
+    Pie_Chart.name = ''
+    # 控制饼图为正圆
+    plt.axes(aspect='equal')
+    # plot方法对序列进行绘图
+    Pie_Chart.plot(kind='pie',  # 选择图形类型
+                   autopct='%.1f%%',  # 饼图中添加数值标签
+                   radius=1,  # 设置饼图的半径
+                   startangle=180,  # 设置饼图的初始角度
+                   counterclock=False,  # 将饼图的顺序设置为顺时针方向
+                   title='出租房各面积区间的占有率',  # 为饼图添加标题
+                   wedgeprops={'linewidth': 1.5, 'edgecolor': 'green'},  # 设置饼图内外边界的属性值
+                   textprops={'fontsize': 10, 'color': 'black'}  # 设置文本标签的属性值
+                   )
+    # 显示图形
+    plt.show()
+
+
+# 1.获取各区域平均租金折线图
+# 2.获取各区域房源数量柱状图
 def doAnalysis_areaAvgRent_And_HouseCount(df):
     grb = df.groupby(by="区域")
     areaNameList_x = []
@@ -69,6 +140,7 @@ def doAnalysis_areaAvgRent_And_HouseCount(df):
     plt.show()
 
 
+# 分析出租房中哪种户型的数量最多的柱状图
 def doAnalysis_houseType(df):
     gpb_hx = df.groupby(["户型"])
     houseTypeList_x = []
