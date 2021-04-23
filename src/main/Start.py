@@ -12,7 +12,7 @@ from matplotlib import pyplot as plt
 
 
 # 数据爬取
-def spiderData():
+def spiderData(pagePreFix):
     print("开始爬取数据")
     print("*" * 100)
     start = time.time()
@@ -20,7 +20,7 @@ def spiderData():
     tList = []
     # 爬取所有房子具体信息
     for j in range(SPIDER_PAGE_NUM):  # 生成url
-        spider.urlEnQue(spider.pageUrl.format(j))
+        spider.urlEnQue(spider.pageUrl.format(pagePreFix,j))
     for i in range(THREAD_COUNT):  # 启动n个线程 开始爬取数据
         t = Thread(target=spider.parsePageGetHouseInfo)
         t.start()

@@ -6,5 +6,9 @@
 from src.main.Start import spiderData, dataAnalysis
 
 if __name__ == '__main__':
-    spiderData()
-    dataAnalysis()
+    while True:
+        read = input("请输入要爬取的城市例如[武汉]->[wh]")
+        if (read == "exit"):
+            break
+        spiderData(read)
+        dataAnalysis()
